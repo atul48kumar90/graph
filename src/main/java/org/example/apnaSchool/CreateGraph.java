@@ -86,12 +86,12 @@ public class CreateGraph {
         }
     }
 
-    public static void BFS(ArrayList<Edge> graph[], int V)
+    public static void BFS(ArrayList<Edge> graph[], int V, boolean[] vis, int start)
     {
         Queue<Integer> q = new LinkedList<>();
-        boolean[] vis = new boolean[V];
 
-        q.add(0);
+
+        q.add(start);
 
         while(!q.isEmpty())
         {
@@ -116,6 +116,15 @@ public class CreateGraph {
         ArrayList<Edge> graph[] = new ArrayList[V];
         createGraph2(graph);
         //printGraph(graph);
-        BFS(graph,V);
+
+        boolean[] vis = new boolean[V];
+        for(int i=0;i<V;i++)
+        {
+            if(vis[i] == false)
+            {
+                BFS(graph,V, vis, i);
+            }
+        }
+
     }
 }
