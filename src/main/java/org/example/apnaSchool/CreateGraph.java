@@ -133,15 +133,15 @@ public class CreateGraph {
         //printGraph(graph);
 
         boolean[] vis = new boolean[V];
-//        for(int i=0;i<V;i++)
-//        {
-//            if(vis[i] == false)
-//            {
-//                BFS(graph,V, vis, i);
-//            }
-//        }
+        for(int i=0;i<V;i++)
+        {
+            if(vis[i] == false)
+            {
+                DFS(graph,i,vis);
+            }
+        }
 
-        DFS(graph, 0, vis);
+//        DFS(graph, 0, vis);
 
     }
 }
