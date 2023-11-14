@@ -110,6 +110,21 @@ public class CreateGraph {
         }
     }
 
+    public static void DFS(ArrayList<Edge> graph[], int curr, boolean[] vis)
+    {
+        System.out.println(curr + "  ");
+        vis[curr] = true;
+
+        for(int i=0;i<graph[curr].size();i++)
+        {
+            Edge e = graph[curr].get(i);
+            if(vis[e.dest] == false)
+            {
+                DFS(graph, e.dest,vis);
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
         int V = 7;
@@ -118,13 +133,15 @@ public class CreateGraph {
         //printGraph(graph);
 
         boolean[] vis = new boolean[V];
-        for(int i=0;i<V;i++)
-        {
-            if(vis[i] == false)
-            {
-                BFS(graph,V, vis, i);
-            }
-        }
+//        for(int i=0;i<V;i++)
+//        {
+//            if(vis[i] == false)
+//            {
+//                BFS(graph,V, vis, i);
+//            }
+//        }
+
+        DFS(graph, 0, vis);
 
     }
 }
