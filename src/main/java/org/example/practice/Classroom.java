@@ -49,14 +49,13 @@ public class Classroom {
         graph[6].add(new Edge(6,5));
     }
 
-    public static void BFS(ArrayList<Edge> graph[], int V)
+    public static void BFS(ArrayList<Edge> graph[], int V, boolean[] visited, int start)
     {
-        boolean[] visited = new boolean[V];
-        Arrays.fill(visited, false);
+        // Arrays.fill(visited, false);
 
         Queue<Integer> q = new LinkedList<>();
 
-        q.add(0);
+        q.add(start);
 
         while(!q.isEmpty())
         {
@@ -78,13 +77,23 @@ public class Classroom {
         int V = 7;
         ArrayList<Edge> graph[] = new ArrayList[V];
         createGraph(graph);
-        BFS(graph, V);
 
-        for(int i=0; i<graph[2].size(); i++)
+        boolean[] vis = new boolean[V];
+
+        for(int i=0; i<V; i++)
         {
-            Edge e = graph[2].get(i);
-            System.out.println(e.dest);
+            if(vis[i] == false)
+            {
+                BFS(graph, V, vis, i);
+            }
         }
+        //BFS(graph, V);
+
+        // for(int i=0; i<graph[2].size(); i++)
+        // {
+        //     Edge e = graph[2].get(i);
+        //     System.out.println(e.dest);
+        // }
 
     }
 }
