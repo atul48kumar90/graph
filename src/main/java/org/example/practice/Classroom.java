@@ -73,6 +73,21 @@ public class Classroom {
         }
     }
 
+    public static void DFS(ArrayList<Edge> graph[], int curr, boolean[] vis)
+    {
+        System.out.print(curr + " ");
+        vis[curr] = true;
+
+        for(int i=0; i<graph[curr].size(); i++)
+        {
+            Edge e = graph[curr].get(i);
+            if(vis[e.dest] == false)
+            {
+                DFS(graph, e.dest, vis);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         int V = 7;
         ArrayList<Edge> graph[] = new ArrayList[V];
@@ -80,13 +95,13 @@ public class Classroom {
 
         boolean[] vis = new boolean[V];
 
-        for(int i=0; i<V; i++)
-        {
-            if(vis[i] == false)
-            {
-                BFS(graph, V, vis, i);
-            }
-        }
+        // for(int i=0; i<V; i++)
+        // {
+        //     if(vis[i] == false)
+        //     {
+        //         BFS(graph, V, vis, i);
+        //     }
+        // }
         //BFS(graph, V);
 
         // for(int i=0; i<graph[2].size(); i++)
@@ -94,6 +109,18 @@ public class Classroom {
         //     Edge e = graph[2].get(i);
         //     System.out.println(e.dest);
         // }
+        
+        //DFS
+
+        for(int i=0; i<V; i++)
+        {
+            if(vis[i] == false)
+            {
+                DFS(graph, i, vis);
+            }
+        }
+
+        //DFS(graph, 0, vis);
 
     }
 }
