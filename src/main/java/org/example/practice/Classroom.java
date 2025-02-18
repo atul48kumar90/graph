@@ -108,6 +108,26 @@ public class Classroom {
         }
     }
 
+    public static boolean isCyclic(ArrayList<Edge> graph[], boolean[] vis, boolean[] rec, int curr)
+    {
+        vis[curr] = true;
+        rec[curr] = true;
+
+        for(int i=0; i<graph[curr].size(); i++)
+        {
+            Edge e = graph[curr].get(i);
+            if(rec[e.dest])
+            {
+                return true;
+            } else if(!vis[e.dest])
+            {
+                isCyclic(graph, vis, rec, e.dest);
+            }
+        }
+        rec[curr] = false;
+        return false;
+    }
+
     public static void main(String[] args) {
         int V = 7;
         ArrayList<Edge> graph[] = new ArrayList[V];
@@ -142,7 +162,9 @@ public class Classroom {
 
         //DFS(graph, 0, vis);
 
-        printAllPath(graph, vis, 0, "0 ", 5);
+        //printAllPath(graph, vis, 0, "0 ", 5);
+        boolean res = isCyclic(graph, vis, new boolean[V], 0);
+        System.out.println(res);
 
     }
 }
