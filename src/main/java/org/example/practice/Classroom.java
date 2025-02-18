@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class Classroom {
 
@@ -130,6 +131,39 @@ public class Classroom {
         return false;
     }
 
+    public static void topSortutil(ArrayList<Edge> graph[], int curr, boolean[] vis, Stack<Integer> stack)
+    {
+        vis[curr] = true;
+
+        for(int i=0; i<graph[curr].size(); i++)
+        {
+            Edge e = graph[curr].get(i);
+            if(!vis[e.dest])
+            {
+                topSortutil(graph, e.dest, vis, stack);
+            }
+        }
+        stack.push(curr);
+    }
+
+    public static void topSort(ArrayList<Edge> graph[] , int V)
+    {
+        boolean[] vis = new boolean[V];
+        Stack<Integer> stack = new Stack<>();
+        for(int i=0; i<V; i++)
+        {
+            if(!vis[i])
+            {
+                topSortutil(graph, i, vis, stack);
+            }
+        }
+
+        while(!stack.isEmpty())
+        {
+            System.out.print(stack.pop() + " ");
+        }
+    }
+
     public static void main(String[] args) {
         int V = 7;
         ArrayList<Edge> graph[] = new ArrayList[V];
@@ -165,19 +199,21 @@ public class Classroom {
         //DFS(graph, 0, vis);
 
         //printAllPath(graph, vis, 0, "0 ", 5);
-        boolean[] rec = new boolean[V];
+        // boolean[] rec = new boolean[V];
 
-        for(int i=0; i<V; i++)
-        {
-            if(!vis[i])
-            {
-                boolean isCycle = isCyclicDirected(graph, vis, rec, 0);
-                System.out.println(isCycle);
-                break;
-            }
-        }
+        // for(int i=0; i<V; i++)
+        // {
+        //     if(!vis[i])
+        //     {
+        //         boolean isCycle = isCyclicDirected(graph, vis, rec, 0);
+        //         System.out.println(isCycle);
+        //         break;
+        //     }
+        // }
         // boolean res = isCyclic(graph, vis, new boolean[V], 0);
         // System.out.println(res);
+
+        topSort(graph, V);
 
     }
 }
