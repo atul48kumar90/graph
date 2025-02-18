@@ -1,6 +1,9 @@
 package org.example.practice;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Classroom {
 
@@ -46,10 +49,36 @@ public class Classroom {
         graph[6].add(new Edge(6,5));
     }
 
+    public static void BFS(ArrayList<Edge> graph[], int V)
+    {
+        boolean[] visited = new boolean[V];
+        Arrays.fill(visited, false);
+
+        Queue<Integer> q = new LinkedList<>();
+
+        q.add(0);
+
+        while(!q.isEmpty())
+        {
+            int curr = q.remove();
+            if(visited[curr] == false){
+            System.out.print(curr + " ");
+            visited[curr] = true;
+
+            for(int i=0; i<graph[curr].size(); i++)
+            {
+                Edge e = graph[curr].get(i);
+                q.add(e.dest);
+            }
+        }
+        }
+    }
+
     public static void main(String[] args) {
         int V = 7;
         ArrayList<Edge> graph[] = new ArrayList[V];
         createGraph(graph);
+        BFS(graph, V);
 
         for(int i=0; i<graph[2].size(); i++)
         {
