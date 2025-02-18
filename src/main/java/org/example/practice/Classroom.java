@@ -88,6 +88,26 @@ public class Classroom {
         }
     }
 
+    public static void printAllPath(ArrayList<Edge> graph[], boolean[] vis, int curr, String path, int tar)
+    {
+        if( curr == tar)
+        {
+            System.out.println(path);
+            return;
+        }
+
+        for(int i=0; i<graph[curr].size(); i++)
+        {
+            Edge e = graph[curr].get(i);
+            if(!vis[e.dest])
+            {
+                vis[curr] = true;
+                printAllPath(graph, vis, e.dest, path+e.dest+" ", tar);
+                vis[curr] = false;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         int V = 7;
         ArrayList<Edge> graph[] = new ArrayList[V];
@@ -112,15 +132,17 @@ public class Classroom {
         
         //DFS
 
-        for(int i=0; i<V; i++)
-        {
-            if(vis[i] == false)
-            {
-                DFS(graph, i, vis);
-            }
-        }
+        // for(int i=0; i<V; i++)
+        // {
+        //     if(vis[i] == false)
+        //     {
+        //         DFS(graph, i, vis);
+        //     }
+        // }
 
         //DFS(graph, 0, vis);
+
+        printAllPath(graph, vis, 0, "0 ", 5);
 
     }
 }
