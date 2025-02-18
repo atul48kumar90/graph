@@ -164,6 +164,29 @@ public class Classroom {
         }
     }
 
+    public static boolean isCyclicUndirected(ArrayList<Edge> graph[], int curr, boolean[] vis, int par)
+    {
+        vis[curr] = true;
+
+        for(int i=0; i<graph[curr].size();i++)
+        {
+            Edge e = graph[curr].get(i);
+            if(vis[e.dest] && e.dest !=par)
+            {
+                return true;
+            } else if(!vis[e.dest])
+            {
+                if(isCyclicUndirected(graph, e.dest, vis, curr))
+                {
+                    return true;
+                }
+            }
+        }
+
+
+        return false;
+    }
+
     public static void main(String[] args) {
         int V = 7;
         ArrayList<Edge> graph[] = new ArrayList[V];
