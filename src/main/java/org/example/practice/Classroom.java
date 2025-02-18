@@ -108,7 +108,7 @@ public class Classroom {
         }
     }
 
-    public static boolean isCyclic(ArrayList<Edge> graph[], boolean[] vis, boolean[] rec, int curr)
+    public static boolean isCyclicDirected(ArrayList<Edge> graph[], boolean[] vis, boolean[] rec, int curr)
     {
         vis[curr] = true;
         rec[curr] = true;
@@ -121,7 +121,7 @@ public class Classroom {
                 return true;
             } else if(!vis[e.dest])
             {
-                if(isCyclic(graph, vis, rec, e.dest)){
+                if(isCyclicDirected(graph, vis, rec, e.dest)){
                     return true;
                 }
             }
@@ -165,8 +165,19 @@ public class Classroom {
         //DFS(graph, 0, vis);
 
         //printAllPath(graph, vis, 0, "0 ", 5);
-        boolean res = isCyclic(graph, vis, new boolean[V], 0);
-        System.out.println(res);
+        boolean[] rec = new boolean[V];
+
+        for(int i=0; i<V; i++)
+        {
+            if(!vis[i])
+            {
+                boolean isCycle = isCyclicDirected(graph, vis, rec, 0);
+                System.out.println(isCycle);
+                break;
+            }
+        }
+        // boolean res = isCyclic(graph, vis, new boolean[V], 0);
+        // System.out.println(res);
 
     }
 }
