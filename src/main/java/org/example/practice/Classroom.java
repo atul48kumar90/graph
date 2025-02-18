@@ -121,7 +121,9 @@ public class Classroom {
                 return true;
             } else if(!vis[e.dest])
             {
-                isCyclic(graph, vis, rec, e.dest);
+                if(isCyclic(graph, vis, rec, e.dest)){
+                    return true;
+                }
             }
         }
         rec[curr] = false;
