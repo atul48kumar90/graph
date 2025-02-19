@@ -1,5 +1,6 @@
 package org.example.practice;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -362,6 +363,48 @@ public class Classroom {
                     System.out.println("graph has -ve weight cycle");
                 }
             }
+        }
+    }
+
+    public static void kosarajuAlgo(ArrayList<Edge> graph[], int V)
+    {
+        Stack<Integer> s = new Stack<>();
+        boolean[] vis = new boolean[V];
+        //step-1 do topological sorting
+        for(int i=0; i<V; i++)
+        {
+            if(!vis[i])
+            {
+                topSortutil(graph, i, vis, s);
+            }
+        }
+
+        //step-2 create a transpose graph
+        ArrayList<Edge> transpose[] = new ArrayList[V];
+        for(int i=0; i<graph.length; i++)
+        {
+            vis[i] = false;
+            transpose[i] = new ArrayList<Edge>();
+        }
+
+        for(int i=0; i<V; i++)
+        {
+            for(int j=0; j<graph[i].size();j++)
+            {
+                Edge e = graph[i].get(j);
+                transpose[e.dest].add(new Edge(e.dest, e.src));
+            }
+        }
+
+        //step-3 do DFS on stack
+        while(!s.isEmpty())
+        {
+            int curr = s.pop();
+            if(!vis[curr])
+            {
+                DFS(graph, curr, vis);
+            }
+            System.out.println();
         }
     }
 
