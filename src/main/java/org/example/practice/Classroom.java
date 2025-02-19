@@ -3,23 +3,33 @@ package org.example.practice;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 
 public class Classroom {
 
-    static class Edge {
+    static class Edge{
         int src;
         int dest;
+        int wt;
 
-        Edge(int src, int dest)
+        public Edge(int s, int d, int wt)
         {
-            this.src = src;
-            this.dest = dest;
+            this.src = s;
+            this.dest = d;
+            this.wt = wt;
         }
+
+        public Edge(int s, int d)
+        {
+            this.src = s;
+            this.dest = d;
+        }
+
     }
 
-    public static void createGraph(ArrayList<Edge> graph[])
+    public static void createGraph2(ArrayList<Edge> graph[])
     {
         for(int i=0; i<graph.length; i++)
         {
@@ -48,6 +58,24 @@ public class Classroom {
         graph[5].add(new Edge(5,6));
 
         graph[6].add(new Edge(6,5));
+    }
+
+    private static void createGraph(ArrayList<Edge> graph[]) {
+
+        for(int i=0;i<graph.length;i++)
+        {
+            graph[i] = new ArrayList<>();
+        }
+
+        graph[0].add(new Edge(0,1, 2));
+        graph[0].add(new Edge(0,2, 2));
+        graph[1].add(new Edge(1,2, 10));
+        graph[1].add(new Edge(1,3, 0));
+        graph[2].add(new Edge(2,0, 2));
+        graph[2].add(new Edge(2,1, 10));
+        graph[2].add(new Edge(2,3, -1));
+        graph[3].add(new Edge(3,1, 0));
+        graph[3].add(new Edge(3,2, -1));
     }
 
     public static void BFS(ArrayList<Edge> graph[], int V, boolean[] visited, int start)
@@ -185,6 +213,66 @@ public class Classroom {
 
 
         return false;
+    }
+    public static class Pair implements Comparable<Pair> {
+        int node;
+        int dist;
+
+        public Pair(int n, int d)
+        {
+            this.node = n;
+            this.dist = d;
+        }
+
+        @Override
+        public int compareTo(Pair p2) {
+            return this.dist - p2.dist;
+        }
+    }
+
+    public static void dijkstra(ArrayList<Edge> graph[], int src, int V)
+    {
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        int[] dist = new int[V];
+        for(int i=0; i<V; i++) {
+            if(i != src)
+            {
+                dist[i] = Integer.MAX_VALUE;
+            }
+        }
+
+        boolean vis[] = new boolean[V];
+
+        pq.add(new Pair(0,0));
+
+        while(!pq.isEmpty())
+        {
+            Pair curr = pq.remove();
+            if(!vis[curr.node])
+            {
+                vis[curr.node] = true;
+
+                for(int i=0; i<graph[curr.node].size();i++)
+                {
+                    Edge e = graph[curr.node].get(i);
+                    int u = e.src;
+                    int v = e.dest;
+                    if(dist[u] + e.wt < dist[v])
+                    {
+                        dist[v] = dist[u] + e.wt;
+                        pq.add(new Pair(v, dist[v]));
+                    }
+                }
+            }
+
+            for(int i=0; i<V; i++)
+            {
+                System.out.print(dist[i] + " ");
+            }
+            System.out.println();
+
+        }
+
     }
 
     public static void main(String[] args) {
