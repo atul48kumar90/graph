@@ -1,3 +1,5 @@
+package org.example.striver;
+
 /*
  * 547. Number of Provinces
 Solved
