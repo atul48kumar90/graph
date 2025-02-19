@@ -230,6 +230,50 @@ public class Classroom {
         }
     }
 
+    public static class Pair2 implements Comparable<Pair2> {
+        int node;
+        int cost;
+
+        Pair2(int n, int c)
+        {
+            this.node= n;
+            this.cost = c;
+        }
+
+        @Override
+        public int compareTo(Pair2 p2)
+        {
+            return this.cost - p2.cost;
+        }
+    }
+
+    public static void prims(ArrayList<Edge> graph[], int V)
+    {
+        PriorityQueue<Pair2> pq = new PriorityQueue<>();
+        pq.add(new Pair2(0,0));
+
+        boolean[] vis = new boolean[V];
+         int mstCost = 0;
+
+         while(!pq.isEmpty())
+         {
+            Pair2 curr = pq.remove();
+            vis[curr.node] = true;
+            mstCost += curr.cost;
+
+            for(int i=0; i<graph[curr.node].size(); i++)
+            {
+                Edge e = graph[curr.node].get(i);
+                if(!vis[e.dest])
+                {
+                    pq.add(new Pair2(e.dest, e.wt));
+                }
+            }
+         }
+
+         System.out.println(" min cost of mst: " + mstCost);
+    }
+
     public static void dijkstra(ArrayList<Edge> graph[], int src, int V)
     {
         PriorityQueue<Pair> pq = new PriorityQueue<>();
