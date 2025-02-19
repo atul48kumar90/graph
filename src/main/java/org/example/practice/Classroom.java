@@ -414,7 +414,8 @@ public class Classroom {
         // boolean res = isCyclic(graph, vis, new boolean[V], 0);
         // System.out.println(res);
 
-        topSort(graph, V);
+        //topSort(graph, V);
+        prims(graph, V);
 
     }
 }
